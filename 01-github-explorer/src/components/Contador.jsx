@@ -11,7 +11,7 @@ export const Contador = () => {
     <div>
       <h2>{count}</h2>
       <button type="buttton" onClick={increment}>
-        Increment
+        Increments
       </button>
     </div>
   );
