@@ -1,4 +1,5 @@
 import { Repositoryitem } from "./RepositoryItem";
+import './../styles/repositories.scss'
 
 const repository = {
   name: 'Trilha ReactJS',
