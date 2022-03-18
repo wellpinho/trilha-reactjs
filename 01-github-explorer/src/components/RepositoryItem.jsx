@@ -5,10 +5,10 @@ export const Repositoryitem = (props) => {
   return (
     <li>
       {/* ?? é para que caso props.repository venha vazio */}
-      <strong>{props.repository?.name ?? 'Default'}</strong>
+      <strong>{props.repository.name}</strong>
       <p>{props.repository.description}</p>
-      <a href={props.repository.link}>
-        Acessar repositórios
+      <a href={props.repository.html_url}>
+        Acessar o repositório
       </a>
     </li>
   );
