@@ -1,7 +1,15 @@
 // para acessar as informações enviado do component pai 
 // acessamos ela via params
+interface IRepositoryItemProps {
+  repository: {
+    name: string;
+    description: string;
+    html_url: string;
+  }
+} 
 
-export const Repositoryitem = (props) => {
+// props agora usa o formato da interface com seus atributos
+export const Repositoryitem = (props: IRepositoryItemProps) => {
   return (
     <li>
       {/* ?? é para que caso props.repository venha vazio */}

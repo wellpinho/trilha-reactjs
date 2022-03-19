@@ -5,9 +5,16 @@ import './../styles/repositories.scss'
 
 // https://api.github.com/users/wellpinho/repos
 
+interface IRepository {
+  name: string;
+  description: string;
+  html_url: string;
+}
+
 export const Repositorylist = () => {
   // sempre que for uma listagem usamos no useState o tipo array
-  const [repositories, setRepositories] = useState([]);
+  // estado precisa ser tipado usando o generic TS = <IRepository[]>
+  const [repositories, setRepositories] = useState<IRepository[]>([]);
 
   // quando houver alteração o useEffect é o indicado
   useEffect(() => {
@@ -27,8 +34,8 @@ export const Repositorylist = () => {
         o component pai envia informação
         ao component filho */}
         {
-          repositories.map(repo => {
-            return <Repositoryitem repository={repo} key={repo.name} />
+          repositories.map(repository => {
+            return <Repositoryitem repository={repository} key={repository.name} />
           })
         }
       </ul>
