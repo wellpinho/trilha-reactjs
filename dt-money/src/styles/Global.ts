@@ -32,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
   // 1rem = font size da tela baseado na @media;
 
   body { 
-    background: (--background);
+    background: var(--background);
     // deixa a font mais nítidas
     -webkit-font-smoothing: antialiased;
   }
