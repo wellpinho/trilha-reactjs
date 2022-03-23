@@ -1,12 +1,9 @@
 import { useState } from 'react';
-import Modal from 'react-modal'
 
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
+import { NewTransactionModal } from './NewTransactionModal';
 import { GlobalStyle } from "./styles/Global";
-
-// react modal sem isso fica acoplado ao elemento body
-Modal.setAppElement('#root')
 
 export function App() {
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false)
@@ -25,14 +22,14 @@ export function App() {
     <>
       {/* passando a função via props para o filho no caso index do component header */}
       <Header onOpenNewTranslationModal={handleOpenNewTransactionModal} />
+
       <Dashboard />
 
-      <Modal
+      <NewTransactionModal 
+        // passando a função via props para o filho
         isOpen={isNewTransactionModalOpen}
         onRequestClose={handleCloseNewTransactionModal}
-      >
-          Cadastrar transação
-      </Modal>
+      />
 
       <GlobalStyle />
     </>
