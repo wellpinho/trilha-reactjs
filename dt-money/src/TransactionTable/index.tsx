@@ -1,11 +1,11 @@
 import { useEffect } from "react";
+import { axiosApi } from "../services/api";
 import { Container } from "./styles";
 
 export function TransactionTable() {
   useEffect(() => {
-    fetch('http://localhost:3000/api/transactions')
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+    axiosApi.get('/transactions')
+      .then((response) => console.log(response.data))
   }, []) // array vazio indica que só quero executar este cara uma vez
   return (
     <Container>
