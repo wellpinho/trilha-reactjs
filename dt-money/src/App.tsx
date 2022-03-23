@@ -5,6 +5,9 @@ import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { GlobalStyle } from "./styles/Global";
 
+// react modal sem isso fica acoplado ao elemento body
+Modal.setAppElement('#root')
+
 export function App() {
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false)
 
