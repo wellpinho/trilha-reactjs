@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosApi } from "../services/api";
+import moment from 'moment';
+
 import { Container } from "./styles";
 
 interface ITransaction {
@@ -11,12 +13,13 @@ interface ITransaction {
   createdAt: string;
 }
 
+
 export function TransactionTable() {
   const [transactions, setTransaction] = useState<ITransaction[]>([])
-
+  
   useEffect(() => {
     axiosApi.get('/transactions')
-      .then((response) => setTransaction(response.data))
+    .then((response) => setTransaction(response.data))
   }, []) // array vazio indica que só quero executar este cara uma vez
   return (
     <Container>
@@ -35,9 +38,13 @@ export function TransactionTable() {
               return (
                 <tr key={transaction.id}>
                   <td>{transaction.title}</td>
-                  <td className={transaction.type}>+R${transaction.amount}</td>
+                  <td className={transaction.type}>
+                    {/* usando lib nativa do js para tratar formato da moeda local */}
+                    {new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'})
+                    .format(transaction.amount)}
+                  </td>
                   <td>{transaction.category}</td>
-                  <td>{transaction.createdAt}</td>
+                  <td>{moment(transaction.createdAt).utc().format('DD/MM/YYYY')}</td>
                 </tr>
               )
             })}
