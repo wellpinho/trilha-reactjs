@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { TransactionContext } from "../TransactionsContext";
 import { axiosApi } from "../services/api";
 import moment from 'moment';
 
@@ -15,6 +16,7 @@ interface ITransaction {
 
 
 export function TransactionTable() {
+  const data = useContext(TransactionContext);
   const [transactions, setTransaction] = useState<ITransaction[]>([])
   
   useEffect(() => {

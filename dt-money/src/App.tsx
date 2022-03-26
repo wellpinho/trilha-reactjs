@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TransactionContext } from './TransactionsContext';
 
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
@@ -19,7 +20,9 @@ export function App() {
   }
 
   return (
-    <>
+    // provider rpecisa pegar o valor atual do contexto
+    // com isso agora qualquer componente dentro do App pode consumir props de qualquer component
+    <TransactionContext.Provider value={[]}>
       {/* passando a função via props para o filho no caso index do component header */}
       <Header onOpenNewTranslationModal={handleOpenNewTransactionModal} />
 
@@ -32,6 +35,6 @@ export function App() {
       />
 
       <GlobalStyle />
-    </>
+    </TransactionContext.Provider>
   );
 }
