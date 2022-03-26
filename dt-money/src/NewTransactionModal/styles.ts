@@ -1,5 +1,15 @@
 import styled from "styled-components";
-import { darken } from 'polished'
+import { darken, transparentize } from 'polished'
+
+interface IRadioBoxProps {
+  isActive: boolean;
+  activeColor: 'green' | 'red';
+}
+
+const colors = {
+  green: '#33CC95',
+  red: '#E52E4D'
+}
 
 export const Container = styled.form`
   h2 { 
@@ -54,12 +64,18 @@ export const TransactionTypeContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: .5rem;
+`;
 
-  button {
+export const RadioBox = styled.button<IRadioBoxProps>`
     height: 4rem;
     border: 1px solid #d7d7d7;
     border-radius: .2rem;
-    background: transparent;
+
+    background: ${
+      (props) => props.isActive 
+        // 0.9 = 90% de transparência
+        ? transparentize(0.7, colors[props.activeColor])
+        : 'transparent'};
 
     display: flex;
     align-items: center;
@@ -83,5 +99,12 @@ export const TransactionTypeContainer = styled.div`
       font-size: 1rem;
       color: var(--text-title)
     }
-  }
-`;
+
+    .active {
+      background: var(--green);
+    }
+
+    .inactive {
+      background: var(--red);
+    }
+`

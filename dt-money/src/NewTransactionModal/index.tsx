@@ -1,5 +1,6 @@
+import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
-import { Container, TransactionTypeContainer } from "./styles";
+import { Container, RadioBox, TransactionTypeContainer } from "./styles";
 
 import closeImg from './../assets/close.svg';
 import incomeImg from './../assets/income.svg';
@@ -13,6 +14,20 @@ interface INewTransactionModalProps {
 Modal.setAppElement('#root');
 
 export function NewTransactionModal({isOpen, onRequestClose}: INewTransactionModalProps) {
+  // salvando cada input no seu estado
+  const [title, setTitle] = useState('');
+  const [value, setValue] = useState(0);
+  const [category, setCategory] = useState('');
+
+  const [type, setType] = useState('deposit');
+
+  function handleCreateNewTransaction(event: FormEvent) {
+    event.preventDefault();
+    console.log({
+      title, value, category,
+    })
+  }
+
   return (
       <Modal
         overlayClassName="react-modal-overlay"
@@ -28,26 +43,57 @@ export function NewTransactionModal({isOpen, onRequestClose}: INewTransactionMod
           <img src={closeImg} alt="fechar modal" />
         </button>
 
-        <Container>
+        {/* onSubmit envia toda os dados dos inpputs para o estado da função chamada */}
+        <Container onSubmit={handleCreateNewTransaction}>
           <h2>Cadastrar transação</h2>
 
           <form>
-            <input type="text" placeholder="Título" />
-            <input type="number" placeholder="Valor" />
+            <input 
+              type="text" 
+              placeholder="Título" 
+              value={title}
+              // onChange executa toda vez que tiver um novo valor no input
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input 
+              type="number" 
+              placeholder="Valor" 
+              value={value}
+              // onChange executa toda vez que tiver um novo valor no input
+              // quando o input é do tipo numerical precisa converter para numero o target
+              onChange={(e) => setValue(Number(e.target.value))} 
+            />
 
             <TransactionTypeContainer>
-              <button type="button">
+              {/* funções pequenas pode ser feita direto no onClick */}
+              <RadioBox 
+                type="button"
+                onClick={() => {setType('deposit')}}
+                isActive={type === 'deposit'}
+                activeColor="green"
+              >
                 <img src={incomeImg} alt="entrada" />
                 <span>Entrada</span>
-              </button>
+              </RadioBox>
 
-              <button type="button">
+              {/* funções pequenas pode ser feita direto no onClick */}
+              <RadioBox 
+                type="button" 
+                onClick={() => {setType('withdraw')}}
+                isActive={type === 'withdraw'}
+                activeColor="red"
+              >
                 <img src={outcomeImg} alt="saída" />
                 <span>Saída</span>
-              </button>
+              </RadioBox>
             </TransactionTypeContainer>
 
-            <input type="number" placeholder="Categoria" />
+            <input 
+              type="number" 
+              placeholder="Categoria"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            />
             <button type="submit">Cadastrar</button>
           </form>
         </Container>
