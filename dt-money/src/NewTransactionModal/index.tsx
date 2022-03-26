@@ -5,6 +5,7 @@ import { Container, RadioBox, TransactionTypeContainer } from "./styles";
 import closeImg from './../assets/close.svg';
 import incomeImg from './../assets/income.svg';
 import outcomeImg from './../assets/outcome.svg';
+import { axiosApi } from '../services/api';
 
 interface INewTransactionModalProps {
   isOpen: boolean;
@@ -23,9 +24,12 @@ export function NewTransactionModal({isOpen, onRequestClose}: INewTransactionMod
 
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-    console.log({
-      title, value, category,
-    })
+
+    const data = {
+      title, value, category, type,
+    };
+
+    axiosApi.post('/transactions', data)
   }
 
   return (
@@ -46,8 +50,6 @@ export function NewTransactionModal({isOpen, onRequestClose}: INewTransactionMod
         {/* onSubmit envia toda os dados dos inpputs para o estado da função chamada */}
         <Container onSubmit={handleCreateNewTransaction}>
           <h2>Cadastrar transação</h2>
-
-          <form>
             <input 
               type="text" 
               placeholder="Título" 
@@ -89,13 +91,12 @@ export function NewTransactionModal({isOpen, onRequestClose}: INewTransactionMod
             </TransactionTypeContainer>
 
             <input 
-              type="number" 
+              type="text" 
               placeholder="Categoria"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             />
             <button type="submit">Cadastrar</button>
-          </form>
         </Container>
       </Modal>
   )

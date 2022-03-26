@@ -99,12 +99,4 @@ export const RadioBox = styled.button<IRadioBoxProps>`
       font-size: 1rem;
       color: var(--text-title)
     }
-
-    .active {
-      background: var(--green);
-    }
-
-    .inactive {
-      background: var(--red);
-    }
 `
