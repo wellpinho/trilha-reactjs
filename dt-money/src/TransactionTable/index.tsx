@@ -1,11 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { axiosApi } from "../services/api";
 import { Container } from "./styles";
 
+interface ITransaction {
+  id: number;
+  title: string;
+  type: string;
+  amount: number;
+  category: string;
+  createdAt: string;
+}
+
 export function TransactionTable() {
+  const [transactions, setTransaction] = useState<ITransaction[]>([])
+
   useEffect(() => {
     axiosApi.get('/transactions')
-      .then((response) => console.log(response.data))
+      .then((response) => setTransaction(response.data))
   }, []) // array vazio indica que só quero executar este cara uma vez
   return (
     <Container>
@@ -20,21 +31,16 @@ export function TransactionTable() {
         </thead>
 
         <tbody>
-          <tr>
-            <td>Desenvolvimento de website</td>
-            <td className="deposit">+R$12.000</td>
-            <td>Desenvolvimento</td>
-            <td>23/03/2022</td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <tr>
-            <td>Aluguel</td>
-            <td className="withdraw">-R$750</td>
-            <td>casa</td>
-            <td>05/03/2022</td>
-          </tr>
+            {transactions.map(transaction => {
+              return (
+                <tr key={transaction.id}>
+                  <td>{transaction.title}</td>
+                  <td className={transaction.type}>+R${transaction.amount}</td>
+                  <td>{transaction.category}</td>
+                  <td>{transaction.createdAt}</td>
+                </tr>
+              )
+            })}
         </tbody>
       </table>
     </Container>
